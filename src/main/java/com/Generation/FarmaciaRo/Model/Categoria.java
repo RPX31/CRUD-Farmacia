@@ -1,9 +1,11 @@
 package com.Generation.FarmaciaRo.Model;
+import java.util.List;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
@@ -11,19 +13,18 @@ import jakarta.validation.constraints.Size;
 @Entity
 @Table(name = "tb_categoria")
 public class Categoria {
-	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	@NotBlank
-	@Size (min = 2, max = 5000)
+	@NotBlank(message = "O nome é obrigatório.") 
+	@Size(min = 3, max = 5000, message = "O nome deve ter entre 3 e 5000 caracteres.")
 	private String nome;
-	@NotBlank
-	@Size (min = 2, max = 5000)
+	@NotBlank(message = "A descrição é obrigatória.") 
+	@Size(min = 3, max = 5000, message = "O nome deve ter entre 3 e 5000 caracteres.")
 	private String descricao;
-	
-	
-	
+	@OneToMany(mappedBy = "categoria") 
+    private List<Produto> produtos;
+
 	public Long getId() {
 		return id;
 	}
@@ -42,7 +43,4 @@ public class Categoria {
 	public void setDescricao(String descricao) {
 		this.descricao = descricao;
 	}
-
-	
-	
 }
